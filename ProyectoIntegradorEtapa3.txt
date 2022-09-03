@@ -1,0 +1,94 @@
+/*-------------------ETAPA 3---------------------*/
+
+SELECT * FROM Clientes_Neptuno;
+
+SELECT IDCliente, NombreCompania, CONCAT(Direccion, ' - ', Ciudad, ' - ', Pais) AS Ubicacion FROM 
+Clientes_Neptuno;
+
+SELECT IDCliente, NombreCompania, CONCAT_WS(' - ', Direccion, Ciudad, Pais) AS Ubicacion FROM 
+Clientes_Neptuno;
+
+SELECT IDCliente, UPPER(NombreCompania) AS Empresa , CONCAT_WS(' - ', Direccion, Ciudad, Pais) 
+AS Ubicacion FROM Clientes_Neptuno;
+
+SELECT LOWER(IDCliente) AS Codigo, UPPER(NombreCompania) AS Empresa , CONCAT_WS(' - ', Direccion, Ciudad, Pais) 
+AS Ubicacion FROM Clientes_Neptuno;
+
+SELECT * FROM Nacimientos;
+
+SELECT Fecha, LEFT(Sexo, 1) AS Sexo, LEFT(Tipo_Parto, 1) AS TIPO FROM Nacimientos;
+
+SELECT * FROM Clientes_Neptuno;
+
+SELECT *, UPPER(CONCAT(LEFT(Ciudad, 1), LEFT(Pais, 1), RIGHT(Pais, 2))) AS Codigo FROM Clientes_Neptuno;
+
+SELECT Sexo, Fecha, Tipo_Parto, Atenc_Part, Local_Part, SUBSTRING(Fecha, 4, 2) AS Mes FROM Nacimientos ORDER BY Fecha;
+
+SELECT Sexo, Fecha, Tipo_Parto, REPLACE(Nacionalidad, 'Chilena', 'Ciudadana') AS Nacionalidad FROM Nacimientos;
+
+SELECT * FROM Pedidos_Neptuno;
+
+SELECT * FROM Pedidos_Neptuno WHERE YEAR(FechaPedido) = 1998;
+SELECT * FROM Pedidos_Neptuno WHERE SUBSTRING(FechaPedido, 1, 4) = 1998;
+
+SELECT * FROM Pedidos_Neptuno WHERE YEAR(FechaPedido) = 1997 AND MONTH(FechaPedido) BETWEEN 8 AND 9;
+
+SELECT * FROM Pedidos_Neptuno WHERE DAY(FechaPedido) = 1;
+
+SELECT *, DATEDIFF(CURDATE(), FechaPedido) AS 'Dias Transcurridos' FROM Pedidos_Neptuno;
+
+SELECT *, DATEDIFF(CURDATE(), FechaPedido) AS 'Dias Transcurridos', DAYNAME(FechaPedido)
+AS Dia FROM Pedidos_Neptuno;
+
+SELECT *, DATEDIFF(CURDATE(), FechaPedido) AS 'Dias Transcurridos', DAYNAME(FechaPedido)
+AS Dia, DAYOFYEAR(FechaPedido) AS 'Dia Del Año' FROM Pedidos_Neptuno;
+
+SELECT *, DATEDIFF(CURDATE(), FechaPedido) AS 'Dias Transcurridos', DAYNAME(FechaPedido)
+AS Dia, DAYOFYEAR(FechaPedido) AS 'Dia Del Año', MONTHNAME(FechaPedido) AS 'Mes' 
+FROM Pedidos_Neptuno;
+
+SELECT *, DATEDIFF(CURDATE(), FechaPedido) AS 'Dias Transcurridos', DAYNAME(FechaPedido)
+AS Dia, DAYOFYEAR(FechaPedido) AS 'Dia Del Año', MONTHNAME(FechaPedido) AS 'Mes', 
+ADDDATE(FechaPedido, INTERVAL 30 DAY) AS 'Primer Vencimiento' FROM Pedidos_Neptuno;
+
+SELECT *, DATEDIFF(CURDATE(), FechaPedido) AS 'Dias Transcurridos', DAYNAME(FechaPedido)
+AS Dia, DAYOFYEAR(FechaPedido) AS 'Dia Del Año', MONTHNAME(FechaPedido) AS 'Mes', 
+ADDDATE(FechaPedido, INTERVAL 30 DAY) AS 'Primer Vencimiento', 
+ADDDATE(FechaPedido, INTERVAL 2 MONTH) AS 'Segundo VEncimiento' FROM Pedidos_Neptuno;
+
+SELECT *, ROUND(Cargo * 0.21, 2) AS IVA FROM Pedidos_Neptuno;
+
+SELECT *, ROUND(Cargo * 0.21, 2) AS IVA, ROUND(Cargo * 1.21, 2) AS Neto FROM Pedidos_Neptuno;
+
+SELECT *, ROUND(Cargo * 0.21, 2) AS IVA, ROUND(Cargo * 1.21, 2) AS Neto,
+FLOOR(ROUND(Cargo* 1.21, 2)) AS 'REDONDEO A FAVOR DEL CLIENTE' FROM Pedidos_Neptuno;
+
+SELECT *, ROUND(Cargo * 0.21, 2) AS IVA, ROUND(Cargo * 1.21, 2) AS Neto,
+FLOOR(ROUND(Cargo* 1.21, 2)) AS 'REDONDEO A FAVOR DEL CLIENTE', CEIL(ROUND(Cargo * 1.21, 2)) 
+AS 'REDONDEO A FAVOR DE LA EMPRESA' FROM Pedidos_Neptuno;
+
+SELECT COUNT(Transportista) FROM Pedidos_Neptuno;
+SELECT COUNT(Transportista) AS 'ENTREGAS SPEEDY EXPRESS' FROM Pedidos_Neptuno 
+WHERE Transportista = 'SPEEDY EXPRESS';
+SELECT COUNT(Empleado) AS 'Ventas' FROM Pedidos_Neptuno
+WHERE Empleado LIKE 'C%';
+
+SELECT ROUND(AVG(PrecioUnidad), 2) 'Precio Promedio' FROM Productos_Neptuno;
+SELECT MIN(PrecioUnidad) 'PRECIO INFERIOR' FROM Productos_Neptuno;
+SELECT MAX(PrecioUnidad) 'PRECIO MAXIMO' FROM Productos_Neptuno;
+
+SELECT NombreCategoria AS 'CATEGORIA', MAX(PrecioUnidad) AS 'PRECIO MAXIMO' FROM Productos_Neptuno GROUP BY CATEGORIA;
+
+SELECT COUNT(IDPedido) AS 'ENTREGAS' FROM Pedidos_Neptuno GROUP BY Transportista;
+
+SELECT Sexo, COUNT(Sexo) AS 'NACIMIENTOS' FROM Nacimientos GROUP BY Sexo;
+
+SELECT NombreCompania AS 'CLIENTE', ROUND(SUM(Cargo), 2) AS 'TOTAL GASTOS' FROM Pedidos_Neptuno GROUP BY CLIENTE;
+
+SELECT Seccion, COUNT(Seccion) AS 'CANTIDAD' FROM Productos GROUP BY Seccion ORDER BY CANTIDAD DESC; 
+
+SELECT YEAR(FechaPedido) AS 'AÑO', MONTHNAME(FechaPedido) AS 'MES', COUNT(IDPedido) AS 'VENTAS' 
+FROM Pedidos_Neptuno GROUP BY AÑO, MES ORDER BY AÑO, MES;
+
+SELECT Empleado, ROUND(SUM(Cargo), 2) AS FACTURACION, ROUND(AVG(Cargo), 2) AS PROMEDIO, MAX(Cargo) AS 'MEJOR VENTA',
+MIN(Cargo) AS 'PEOR VENTA', COUNT(Cargo) AS 'VENTAS' FROM PEDIDOS_NEPTUNO GROUP BY Empleado;

@@ -1,0 +1,98 @@
+/*-----------------ETAPA 2--------------------*/
+
+SELECT * FROM Clientes_Neptuno;
+
+ALTER TABLE Clientes_Neptuno
+MODIFY IDCliente VARCHAR(100) PRIMARY KEY,
+MODIFY NombreCompania VARCHAR(100) NOT NULL,
+MODIFY Pais VARCHAR(15) NOT NULL;
+
+RENAME TABLE Clientes TO Contactos;
+
+SELECT * FROM Clientes;
+
+ALTER TABLE Clientes
+MODIFY Cod_Cliente VARCHAR(7) PRIMARY KEY,
+MODIFY Empresa VARCHAR(100) NOT NULL,
+MODIFY Ciudad VARCHAR(25) NOT NULL,
+MODIFY Telefono INT UNSIGNED,
+MODIFY Responsable VARCHAR(30);
+
+DESC Clientes;
+SELECT * FROM Clientes;
+
+SELECT * FROM Pedidos;
+
+ALTER TABLE Pedidos
+MODIFY Numero_Pedido INT PRIMARY KEY,
+MODIFY Codigo_Cliente VARCHAR(7) NOT NULL,
+MODIFY Fecha_Pedido DATE NOT NULL,
+MODIFY Forma_Pago ENUM('APLAZADO', 'CONTADO', 'TARJETA'),
+MODIFY Enviado ENUM('SI', 'NO');
+
+DESC Pedidos;
+SELECT * FROM Pedidos;
+
+SELECT * FROM Productos;
+
+ALTER TABLE Productos
+MODIFY Cod_Producto INT UNSIGNED PRIMARY KEY,
+MODIFY Seccion VARCHAR(20) NOT NULL,
+MODIFY Nombre VARCHAR(40) NOT NULL,
+MODIFY Importado ENUM('VERDADERO', 'FALSO'),
+MODIFY Origen VARCHAR(25) NOT NULL,
+MODIFY Dia INT NOT NULL,
+MODIFY Mes INT NOT NULL,
+MODIFY Ano INT NOT NULL;
+
+SELECT * FROM Clientes_Neptuno;
+
+SELECT NombreCompania, Ciudad, Pais from Clientes_neptuno;
+
+SELECT NombreCompania, Ciudad, Pais from Clientes_neptuno ORDER BY Pais;
+
+SELECT NombreCompania, Ciudad, Pais from Clientes_neptuno ORDER BY Pais, Ciudad;
+
+SELECT NombreCompania, Ciudad, Pais from Clientes_neptuno ORDER BY Pais, Ciudad LIMIT 10;
+
+SELECT NombreCompania, Ciudad, Pais from Clientes_neptuno ORDER BY Pais, Ciudad LIMIT 5 OFFSET 10;
+
+SELECT * FROM NACIMIENTOS;
+
+SELECT * FROM Nacimientos WHERE Nacionalidad = 'EXTRANJERA';
+
+SELECT * FROM Nacimientos WHERE Edad_Madre < 18 ORDER BY Edad_Madre;
+
+SELECT * FROM Nacimientos WHERE Edad_Madre = Edad_Padre;
+
+SELECT * FROM Nacimientos WHERE Edad_Padre - Edad_Madre >= 40;
+
+SELECT * FROM Clientes_Neptuno;
+
+SELECT * FROM Clientes_Neptuno WHERE Pais = 'Argentina';
+
+SELECT * FROM Clientes_Neptuno WHERE Pais <> 'Argentina' ORDER BY Pais;
+
+SELECT * FROM Nacimientos;
+
+SELECT * FROM Nacimientos WHERE Semanas < 20 ORDER BY Semanas DESC;
+
+SELECT * FROM Nacimientos WHERE Sexo = 'Femenino' AND Nacionalidad = 'Extranjera' AND 
+Estado_Civil_Madre = 'Soltera' AND Edad_Madre > 40;
+
+SELECT * FROM Clientes_Neptuno WHERE Pais = 'Argentina' OR Pais = 'Brasil' OR Pais = 'Venezuela'
+ORDER BY Pais, Ciudad;
+
+SELECT * FROM Nacimientos WHERE Semanas BETWEEN 20 AND 25 ORDER BY Semanas;
+SELECT * FROM Nacimientos WHERE Semanas >= 20 AND Semanas <= 25 ORDER BY Semanas;
+
+SELECT * FROM Nacimientos WHERE Comuna IN (1101, 3201, 5605, 8108, 9204, 13120, 15202) 
+ORDER BY Comuna;
+
+SELECT * FROM Clientes_Neptuno;
+SELECT * FROM Clientes_Neptuno WHERE IDCliente LIKE '%C';
+
+SELECT * FROM Clientes_Neptuno WHERE Ciudad LIKE 'B____';
+
+SELECT * FROM Nacimientos;
+SELECT * FROM Nacimientos WHERE Hijos_Total > 10;
